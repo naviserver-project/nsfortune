@@ -1,0 +1,38 @@
+Fortune Module for NaviServer 3.x/4.0
+Release 1.0
+vlad@crystalballinc.com
+
+This is NaviServer module that implements fortune game.
+
+/*--------------------------------------------------------------------*/
+
+Configuration
+
+ns_section      "ns/server/${server}/module/nsfortune"
+ns_param	path			/usr/share/games/fortunes
+ns_param        line_count              0
+ns_param        text_load               0
+
+ - line_count defines that epigrams with no more than specified number
+   of lines will be used
+ - text_load defines if epigrams will be kept in memory or read from
+   file on every request
+ - path specifies from where to load fortune files
+
+
+Usage
+
+  ns_fortune usage:
+
+    ns_fortune
+      Returns random epigram
+
+    ns_fortune addfile file
+       adds epigram file
+
+    ns_fortune addpath path
+       adds all files from the path
+
+Authors
+     Vlad Seryakov vlad@crystalballinc.com
+
