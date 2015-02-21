@@ -10,7 +10,7 @@ MOD      =  nsfortune.so
 #
 # Objects to build.
 #
-OBJS     = nsfortune.o
+MODOBJS     = nsfortune.o
 
 include  $(NAVISERVER)/include/Makefile.module
 

@@ -33,7 +33,7 @@ typedef struct _NsFortuneOffset {
 } NsFortuneOffset;
 
 typedef struct _NsFortuneServer {
-    char *path;
+    const char *path;
     int text_load;
     int line_count;
     int file_count;
@@ -46,16 +46,17 @@ typedef struct _NsFortuneServer {
 } NsFortuneServer;
 
 static void NsFortuneAddFile(NsFortuneServer * fortune, char *file);
-static void NsFortuneAddPath(NsFortuneServer * fortune, char *path);
+static void NsFortuneAddPath(NsFortuneServer * fortune, const char *path);
 static void NsFortune(NsFortuneServer * fortune, Tcl_Interp * interp);
 static int NsFortuneCmd(ClientData, Tcl_Interp *, int, Tcl_Obj * CONST objv[]);
-static int NsFortuneInterpInit(Tcl_Interp *, void *);
+
+static Ns_TclTraceProc NsFortuneInterpInit;
 
 NS_EXPORT int Ns_ModuleVersion = 1;
 
 NS_EXPORT int Ns_ModuleInit(char *server, char *module)
 {
-    char *path;
+    const char *path;
     NsFortuneServer *fortune = (NsFortuneServer *) ns_calloc(1, sizeof(NsFortuneServer));
 
     path = Ns_ConfigGetPath(server, module, NULL);
@@ -73,9 +74,9 @@ NS_EXPORT int Ns_ModuleInit(char *server, char *module)
     return NS_OK;
 }
 
-static int NsFortuneInterpInit(Tcl_Interp * interp, void *context)
+static int NsFortuneInterpInit(Tcl_Interp * interp, const void *context)
 {
-    Tcl_CreateObjCommand(interp, "ns_fortune", NsFortuneCmd, context, NULL);
+    Tcl_CreateObjCommand(interp, "ns_fortune", NsFortuneCmd, (ClientData)context, NULL);
     return NS_OK;
 }
 
@@ -119,7 +120,7 @@ static int NsFortuneCmd(ClientData data, Tcl_Interp * interp, int objc, Tcl_Obj 
     return TCL_OK;
 }
 
-static void NsFortuneAddPath(NsFortuneServer * fortune, char *path)
+static void NsFortuneAddPath(NsFortuneServer * fortune, const char *path)
 {
     DIR *dir;
     char buf[256];
