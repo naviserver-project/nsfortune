@@ -54,7 +54,7 @@ static Ns_TclTraceProc NsFortuneInterpInit;
 
 NS_EXPORT int Ns_ModuleVersion = 1;
 
-NS_EXPORT int Ns_ModuleInit(char *server, char *module)
+NS_EXPORT int Ns_ModuleInit(const char *server, const char *module)
 {
     const char *path;
     NsFortuneServer *fortune = (NsFortuneServer *) ns_calloc(1, sizeof(NsFortuneServer));
@@ -175,7 +175,7 @@ static void NsFortuneAddFile(NsFortuneServer * fortune, char *file)
             fortune->offset_count++;
         }
         offset = ftell(fp);
-        Ns_DStringTrunc(&ds, 0);
+        Ns_DStringSetLength(&ds, 0);
     }
     fortune->file_count++;
     Ns_DStringFree(&ds);
