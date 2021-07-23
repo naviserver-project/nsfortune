@@ -54,7 +54,7 @@ static Ns_TclTraceProc NsFortuneInterpInit;
 
 NS_EXPORT int Ns_ModuleVersion = 1;
 
-NS_EXPORT int Ns_ModuleInit(const char *server, const char *module)
+NS_EXPORT Ns_ReturnCode Ns_ModuleInit(const char *server, const char *module)
 {
     const char *path;
     NsFortuneServer *fortune = (NsFortuneServer *) ns_calloc(1, sizeof(NsFortuneServer));
@@ -74,7 +74,7 @@ NS_EXPORT int Ns_ModuleInit(const char *server, const char *module)
     return NS_OK;
 }
 
-static int NsFortuneInterpInit(Tcl_Interp * interp, const void *context)
+static Ns_ReturnCode NsFortuneInterpInit(Tcl_Interp * interp, const void *context)
 {
     Tcl_CreateObjCommand(interp, "ns_fortune", NsFortuneCmd, (ClientData)context, NULL);
     return NS_OK;
