@@ -61,8 +61,8 @@ NS_EXPORT Ns_ReturnCode Ns_ModuleInit(const char *server, const char *module)
 
     path = Ns_ConfigGetPath(server, module, NULL);
 
-    Ns_ConfigGetBool(path, "line_count", &fortune->line_count);
-    Ns_ConfigGetBool(path, "text_load", &fortune->text_load);
+    Ns_ConfigGetInt(path, "line_count", &fortune->line_count);
+    Ns_ConfigGetInt(path, "text_load", &fortune->text_load);
 
     if (!(fortune->path = Ns_ConfigGetValue(path, "path")))
         fortune->path = "/usr/share/games/fortunes";
